@@ -19,3 +19,4 @@ SELECT Name, SUM(Count) AS total_babies,
 FROM names
 GROUP BY Name
 ORDER BY Name;
+

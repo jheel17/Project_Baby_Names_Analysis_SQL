@@ -1,9 +1,9 @@
 /*
-The Olivia expansion:
-- This SQL query retrieves the count of babies named Olivia each year, alongside a cumulative count 
-of Olivias over the years. 
+The Alexis expansion:
+- This SQL query retrieves the count of babies named Alexis each year, alongside a cumulative count 
+of Alexis over the years. 
 - It utilizes the SUM(count) OVER (ORDER BY year) window function to calculate the cumulative total. 
-- The purpose is to track the popularity trend of the name Olivia over time by examining its yearly 
+- The purpose is to track the popularity trend of the name Alexis over time by examining its yearly 
 counts and cumulative count.
 */
 

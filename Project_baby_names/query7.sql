@@ -1,8 +1,8 @@
 /*
 Top male names over the years:
-This SQL query identifies the most popular male baby names for each year by joining the baby_names 
+This SQL query identifies the most popular male baby names for each year by joining the names 
 table with a subquery MaxNamePerYear, which computes the maximum count of male names per year. 
-It selects the year, first name, and count from table names where the count matches the maximum count
+It selects the year,  name, and count from table names where the count matches the maximum count
 for that year. The purpose is to retrieve the most popular male baby name along with its count for each year, 
 providing insight into yearly trends in male baby name popularity.
 */
