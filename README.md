@@ -100,5 +100,5 @@ GROUP BY Name
 HAVING COUNT(DISTINCT Year) = 105
 ORDER BY total_babies DESC;
 ```
-![Top 10 Classic American baby names](Project_baby_names\assets\popular_names_1910_2014.png)
+![Top 10 Classic American baby names](Project_baby_names/assets/popular_names_1910_2014.png)
 *This bar chart visualizes the top 10 most consistently popular names from 1910 to 2014, ranked by their total occurrences, showcasing the enduring popularity of names like James, John, and Robert.*
