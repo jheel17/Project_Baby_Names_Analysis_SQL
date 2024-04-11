@@ -100,7 +100,7 @@ GROUP BY Name
 HAVING COUNT(DISTINCT Year) = 105
 ORDER BY total_babies DESC;
 ```
-![Top 10 Classic American baby names](Project_baby_names\assets\Q1.PNG)
+![Top 10 Classic American baby names](Project_baby_names/assets/Q1.PNG)
 *This bar chart visualizes the top 10 most consistently popular names from 1910 to 2014, ranked by their total occurrences, showcasing the enduring popularity of names like James, John, and Robert.*
 
 ## 2. Timeless or trendy?
@@ -121,9 +121,9 @@ FROM names
 GROUP BY Name
 ORDER BY Name;
 ```
-![Query Result](Project_baby_names\assets\Q22.PNG)
+![Query Result](Project_baby_names/assets/Q22.PNG)
 
-![Distribution of names by their popularity type with year](Project_baby_names\assets\Q2.PNG)
+![Distribution of names by their popularity type with year](Project_baby_names/assets/Q2.PNG)
 *The bar bar chart visually represents the distribution of names by their popularity type, with annotations indicating the year ranges associated with each category*
 
 **Trendy:** Names appearing in fewer than 20 years.
@@ -146,7 +146,7 @@ GROUP BY name
 ORDER BY total_babies DESC
 LIMIT 10;
 ```
-![Top Ranked Female Names since 1910](Project_baby_names\assets\Q3.PNG)
+![Top Ranked Female Names since 1910](Project_baby_names/assets/Q3.PNG)
 *The chart highlights the enduring popularity of classic names, with "Mary" notably outpacing all others as the most chosen name for female babies since 1920.*
 
 ## 4. Picking a baby name: 
@@ -161,7 +161,7 @@ GROUP BY name
 ORDER BY total_babies DESC
 LIMIT 20;
 ```
-![Popular Female Names Ending in "s" Since 2010'](Project_baby_names\assets\Q4.PNG)
+![Popular Female Names Ending in "s" Since 2010'](Project_baby_names/assets/Q4.PNG)
 
 *The name "Alexis" significantly leads in popularity among female names ending in 'S' since 2010, with "Genesis" as a distant second.*
 
@@ -175,7 +175,7 @@ FROM names
 WHERE name = 'Alexis'
 ORDER BY year;
 ```
-![Query Result](Project_baby_names\assets\Q5.PNG)
+![Query Result](Project_baby_names/assets/Q5.PNG)
 
 *The year 1998 stands out in the dataset: This year saw the highest number of babies named Alexis, with a total of 2,074. It was a significant year for the popularity of the name Alexis*
 
@@ -194,7 +194,7 @@ GROUP BY Year
 ORDER BY max_num DESC
 LIMIT 10;
 ```
-![Top 10 Max Count of Male Baby Names by Year](Project_baby_names\assets\Q6.PNG)
+![Top 10 Max Count of Male Baby Names by Year](Project_baby_names/assets/Q6.PNG)
 
 *This bar chart visualizing the top 10 years with the highest counts of male baby names. Each bar represents the maximum number of babies born with the most popular male name in that particular year, giving a clear picture of the distribution and trends over time.*
 
@@ -221,7 +221,7 @@ ON n.year = mnpy.year AND n.count = mnpy.max_num
 WHERE n.gender = 'M'
 ORDER BY n.year DESC;
 ```
-![Most Popular Male Baby Names from 1910 to 2014](Project_baby_names\assets\Q7.PNG)
+![Most Popular Male Baby Names from 1910 to 2014](Project_baby_names/assets/Q7.PNG)
 
 *The visualization traces the popularity of the most popular male baby names from 1910 to around the year 2000, showing a clear dominance of the names "Robert" and "Michael" for several decades.*
 
@@ -247,6 +247,6 @@ FROM NumberOneNames
 GROUP BY name
 ORDER BY count_top_name DESC;
 ```
-![Frequency of Male Names Ranking Number One Over the Years](Project_baby_names\assets\Q8.PNG)
+![Frequency of Male Names Ranking Number One Over the Years](Project_baby_names/assets/Q8.PNG)
 
 *The bar chart highlights the frequency of certain male names ranking as the most popular over the years, with "Michael" leading significantly, followed by "John," "Robert," "Daniel," "Jacob," and "Noah," in descending order of frequency. This suggests that "Michael" has been a particularly enduring choice for boys' names over the observed time period.*
