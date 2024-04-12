@@ -21,5 +21,4 @@ LEFT JOIN (
   GROUP BY name
 ) AS Other ON WA.name = Other.name
 WHERE Other.name IS NULL
-ORDER BY WA.total_babies DESC
-LIMIT 10;
+ORDER BY WA.total_babies DESC;

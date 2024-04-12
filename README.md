@@ -88,7 +88,7 @@ In this project I have employed a variety of SQL techniques:
 
  - Harnessing the power of window functions for advanced analytical tasks such as calculating cumulative counts and identifying trends over time. 
 
- ## 1. 10 Classic American names:
+ ## 1. Ten Classic American names:
 
  This query aims to identify top 10 classic American baby names by selecting names that have been consistently popular across the span of 105 years, from 1910 to 2010.
 
@@ -247,6 +247,145 @@ FROM NumberOneNames
 GROUP BY name
 ORDER BY count_top_name DESC;
 ```
+
 ![Frequency of Male Names Ranking Number One Over the Years](Project_baby_names/assets/Q8.PNG)
 
 *The bar chart highlights the frequency of certain male names ranking as the most popular over the years, with "Michael" leading significantly, followed by "John," "Robert," "Daniel," "Jacob," and "Noah," in descending order of frequency. This suggests that "Michael" has been a particularly enduring choice for boys' names over the observed time period.*
+
+## Washington State Specific Analysis:
+
+## 1. This SQL query's aim is to determine the 10 most popular names in the state of Washington over all recorded time by summing up the counts of each name.
+
+```sql
+SELECT name, state, SUM(count) AS total_babies
+FROM names
+WHERE state = 'WA'
+GROUP BY name, state
+ORDER BY total_babies DESC
+LIMIT 10;
+```
+
+![Most Popular Name in Wa Over All Time](Project_baby_names\assets\WA1.PNG)
+
+*The pie chart presents the distribution of the most popular names in Washington over all recorded time.*
+
+*Again "Michael" claims the largest segment, indicating it is the most popular name even within this group.*
+
+## 2. This query calculates the average count of each name over all years before 2014 and compares it to the count in 2014 to find names that have become trendy
+
+This query creates three Common Table Expressions (CTEs):
+
+- RecentPopularity: to get the count of each name in 2014.
+
+- HistoricalPopularity: to get the average count of each name before 2014.
+
+- Trendiness: to combine the recent and historical counts and calculate the "trendiness factor" which is the difference between the recent count and the historical average count.
+
+- Finally, it selects names from the Trendiness CTE, orders them by their trendiness factor in descending order, and limits the results to the top 10. 
+
+- This  gives us the names that are most trendy based on the criteria defined.
+
+```sql
+WITH RecentPopularity AS (
+  SELECT name, count
+  FROM names
+  WHERE year = 2014 AND state = 'WA'
+),
+HistoricalPopularity AS (
+  SELECT name, AVG(count) as avg_count
+  FROM names
+  WHERE year < 2014 AND state = 'WA'
+  GROUP BY name
+),
+Trendiness AS (
+  SELECT rp.name, rp.count as recent_count, COALESCE(hp.avg_count, 0) as historical_avg
+  FROM RecentPopularity rp
+  LEFT JOIN HistoricalPopularity hp ON rp.name = hp.name
+)
+SELECT 
+    name, 
+    recent_count, 
+    ROUND(historical_avg, 2) as historical_avg_count, 
+    ROUND((recent_count - historical_avg), 2) AS trendiness_factor
+FROM Trendiness
+ORDER BY trendiness_factor DESC, recent_count DESC
+LIMIT 10;
+```
+
+![Query Result](Project_baby_names\assets\WA2.PNG)
+
+![Trendiness of Names in WA (2014)](Project_baby_names\assets\WA22.PNG)
+
+*The graph depicts the "trendiness factor" of various names, indicating how much more popular each name was in 2014 compared to its historical average in Washington.*
+
+*"Emma" has the highest trendiness factor, suggesting a dramatic increase in popularity and possibly reflecting a broader trend in naming preferences in 2014.*
+
+## 3. The SQL query is designed to find the most popular names that are unique to Washington by excluding any names that also appear in other states' records.
+
+```sql
+SELECT WA.name, WA.total_babies
+FROM (
+  SELECT name, SUM(count) AS total_babies
+  FROM names
+  WHERE state = 'WA'
+  GROUP BY name
+) AS WA
+LEFT JOIN (
+  SELECT name, SUM(count) AS total_babies
+  FROM names
+  WHERE state <> 'WA'
+  GROUP BY name
+) AS Other ON WA.name = Other.name
+WHERE Other.name IS NULL
+ORDER BY WA.total_babies DESC;
+```
+
+![Query Result](Project_baby_names\assets\WA3.PNG)
+
+*The provided list represents names that are unique to Washington state, with the number of babies given each name.*
+ 
+*"Juliya" tops the list with 10 births, while all other names have been given to 5 babies each.*
+
+*This suggests a range of distinctive names that, while not widespread, have a particular resonance in Washington, possibly reflecting cultural, historical, or local influences specific to the state*
+
+# Key Insights:
+
+- **Historical Constants:** Names like James, John, and Robert have remained popular for over a century, highlighting their timeless appeal.
+
+- **Cultural Reflections:** The prevalence of certain names like Michael in specific decades points to cultural or societal influences at play during those times.
+
+- **Regional Distinctiveness:** Unique names in Washington state, such as Juliya, suggest local influences or preferences that differ from nationwide trends.
+
+- **Trendy Names:** Recent spikes in the popularity of names like Emma and Oliver indicate shifting trends, possibly influenced by modern cultural or media phenomena.
+
+# What I Learned:
+
+- Aggregate Functions: Used SUM to compile total counts and AVG to determine historical averages.
+
+- Conditional Logic: Applied CASE WHEN statements to categorize names based on longevity and popularity.
+
+- Pattern Matching: Utilized the LIKE operator to filter names with specific endings.
+
+- Complex Filtering: Employed subqueries and CTEs for organizing and executing multi-step queries.
+
+- Ranking and Trends: Leveraged window functions to rank names and calculate cumulative counts.
+
+# Conclusion:
+
+Names are a mirror to our society, reflecting our values, inspirations, and even our collective psyche at any given moment. This project has not just been about understanding SQL or navigating datasets; it has been about deciphering the subtle language of our cultural evolution. As I conclude this project, I'm struck by the richness of the narrative that data can unfold and the powerful tools at our disposal to narrate this story. The insights gained are not just data points; they are the names of our past, the echoes of our present, and perhaps, the whispers of our future.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
