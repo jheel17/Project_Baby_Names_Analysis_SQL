@@ -16,6 +16,7 @@ In this project, we're analyzing changes in American baby name preferences since
 
 The dataset comprises detailed records of baby names from the United States, capturing over a million entries. 
 
+
 | Column | Description |
 | ------ | ----------- |
 | Id     | The unique identifier for each name record |
@@ -27,6 +28,7 @@ The dataset comprises detailed records of baby names from the United States, cap
 
 
 # Objective:
+
 
 ### Below are the questions I aimed to answer through my analysis:
 
@@ -47,7 +49,9 @@ The dataset comprises detailed records of baby names from the United States, cap
 
 8️⃣ Male name most often at number one?
 
+
 ### Washington State Specific: 
+
 
 As a resident of Washington (WA), I was particularly curious about conducting a specific analysis for our state, delving into the unique trends and patterns of baby names within our community. 🌟🍼
 
@@ -64,6 +68,7 @@ As a resident of Washington (WA), I was particularly curious about conducting a 
 
 # Tools I Used:
 
+
 In my Data Analyst job market project, I utilized a dynamic suite of tools to navigate and analyze data effectively:
 
 - **SQL & PostgreSQL:** 📊 SQL and PostgreSQL formed the backbone, enabling seamless querying and analysis of job market data.
@@ -74,7 +79,9 @@ In my Data Analyst job market project, I utilized a dynamic suite of tools to na
 
 - **GitHub:** 🌐 GitHub served as the central repository, fostering collaboration and sharing insights with the community.
 
+
 # The Analysis: 
+
 
 In this project I have employed a variety of SQL techniques:
 
@@ -88,9 +95,12 @@ In this project I have employed a variety of SQL techniques:
 
  - Harnessing the power of window functions for advanced analytical tasks such as calculating cumulative counts and identifying trends over time. 
 
+
  ## 1. Ten Classic American names:
 
+
  This query aims to identify top 10 classic American baby names by selecting names that have been consistently popular across the span of 105 years, from 1910 to 2010.
+
 
  ```sql
 SELECT Name, SUM(Count) AS total_babies
@@ -100,14 +110,20 @@ GROUP BY Name
 HAVING COUNT(DISTINCT Year) = 105
 ORDER BY total_babies DESC;
 ```
+
+
 ![Top 10 Classic American baby names](Project_baby_names/assets/Q1.PNG)
+
 *This bar chart visualizes the top 10 most consistently popular names from 1910 to 2014, ranked by their total occurrences, showcasing the enduring popularity of names like James, John, and Robert.*
 
+
 ## 2. Timeless or trendy?
+
 
 This SQL query categorizes names based on their historical popularity by counting the total number of babies given those names across different years. 
 
 Names are classified as "Classic," "Semi-classic," "Semi-trendy," or "Trendy" based on the number of years they appear in the data, reflecting their timelessness or trendiness.
+
 
 ```sql
 SELECT Name, SUM(Count) AS total_babies,
@@ -121,9 +137,13 @@ FROM names
 GROUP BY Name
 ORDER BY Name;
 ```
+
+
 ![Query Result](Project_baby_names/assets/Q22.PNG)
 
+
 ![Distribution of names by their popularity type with year](Project_baby_names/assets/Q2.PNG)
+
 *The bar bar chart visually represents the distribution of names by their popularity type, with annotations indicating the year ranges associated with each category*
 
 **Trendy:** Names appearing in fewer than 20 years.
@@ -134,9 +154,12 @@ ORDER BY Name;
 
 **Classic:** Names appearing in over 80 years.
 
+
 ## 3. What are the Top-ranked female names since 1920?
 
+
 The purpose of the SQL query is to rank the top 10 female names by the total count of babies born since 1920, providing a historical view of the most popular female names over the last century.This SQL query provided the opportunity to practice window functions by assigning a rank to female names based on the number of babies that have ever been given that name. 
+
 
 ```sql
 SELECT RANK() OVER (ORDER BY SUM(count) DESC) AS name_rank, name, SUM(count) AS total_babies
@@ -146,8 +169,11 @@ GROUP BY name
 ORDER BY total_babies DESC
 LIMIT 10;
 ```
+
 ![Top Ranked Female Names since 1910](Project_baby_names/assets/Q3.PNG)
+
 *The chart highlights the enduring popularity of classic names, with "Mary" notably outpacing all others as the most chosen name for female babies since 1920.*
+
 
 ## 4. Picking a baby name: 
 
@@ -161,9 +187,11 @@ GROUP BY name
 ORDER BY total_babies DESC
 LIMIT 20;
 ```
+
 ![Popular Female Names Ending in "s" Since 2010'](Project_baby_names/assets/Q4.PNG)
 
 *The name "Alexis" significantly leads in popularity among female names ending in 'S' since 2010, with "Genesis" as a distant second.*
+
 
 ## 5. The Alexis expansion:
 
@@ -175,14 +203,17 @@ FROM names
 WHERE name = 'Alexis'
 ORDER BY year;
 ```
+
 ![Query Result](Project_baby_names/assets/Q5.PNG)
 
 *The year 1998 stands out in the dataset: This year saw the highest number of babies named Alexis, with a total of 2,074. It was a significant year for the popularity of the name Alexis*
+
 
 ## 6. Many males with the same name:
 
 This SQL query retrieves the maximum count of babies born in a given year with a male gender. The purpose is to identify the top 10 number of male births in each year, providing insights into 
 trends or fluctuations in male baby names popularity over time.
+
 
 ```sql
 SELECT
@@ -194,7 +225,9 @@ GROUP BY Year
 ORDER BY max_num DESC
 LIMIT 10;
 ```
+
 ![Top 10 Max Count of Male Baby Names by Year](Project_baby_names/assets/Q6.PNG)
+
 
 *This bar chart visualizing the top 10 years with the highest counts of male baby names. Each bar represents the maximum number of babies born with the most popular male name in that particular year, giving a clear picture of the distribution and trends over time.*
 
@@ -206,6 +239,7 @@ LIMIT 10;
 
 In the previous query, we found the maximum number of babies given any one male name in each year. 
 In this query, we will find out what top male name are for each year in our dataset.
+
 
 ```sql
 WITH MaxNamePerYear AS (
@@ -221,15 +255,20 @@ ON n.year = mnpy.year AND n.count = mnpy.max_num
 WHERE n.gender = 'M'
 ORDER BY n.year DESC;
 ```
+
+
 ![Most Popular Male Baby Names from 1910 to 2014](Project_baby_names/assets/Q7.PNG)
+
 
 *The visualization traces the popularity of the most popular male baby names from 1910 to around the year 2000, showing a clear dominance of the names "Robert" and "Michael" for several decades.*
 
 *One interesting insight we can see is the sharp rise and prolonged dominance of "Michael" from the 1960s through the 1980s, suggesting a strong cultural preference for this name during that era.*
 
+
 ## 8. The most years at number one:
 
 This SQL query is designed to find male baby names that held the number one spot most frequently over the years. It uses window functions to rank names by their count within each year and then counts how many times each name was ranked first. 
+
 
 ```sql
 WITH TopNamePerYear AS (
@@ -265,13 +304,15 @@ ORDER BY total_babies DESC
 LIMIT 10;
 ```
 
-![Most Popular Name in Wa Over All Time](Project_baby_names\assets\WA1.PNG)
+![Most Popular Name in Wa Over All Time](Project_baby_names/assets/WA1.PNG)
 
 *The pie chart presents the distribution of the most popular names in Washington over all recorded time.*
 
 *Again "Michael" claims the largest segment, indicating it is the most popular name even within this group.*
 
+
 ## 2. This query calculates the average count of each name over all years before 2014 and compares it to the count in 2014 to find names that have become trendy
+
 
 This query creates three Common Table Expressions (CTEs):
 
@@ -284,6 +325,7 @@ This query creates three Common Table Expressions (CTEs):
 - Finally, it selects names from the Trendiness CTE, orders them by their trendiness factor in descending order, and limits the results to the top 10. 
 
 - This  gives us the names that are most trendy based on the criteria defined.
+
 
 ```sql
 WITH RecentPopularity AS (
@@ -312,15 +354,17 @@ ORDER BY trendiness_factor DESC, recent_count DESC
 LIMIT 10;
 ```
 
-![Query Result](Project_baby_names\assets\WA2.PNG)
+![Query Result](Project_baby_names/assets/WA2.PNG)
 
-![Trendiness of Names in WA (2014)](Project_baby_names\assets\WA22.PNG)
+![Trendiness of Names in WA (2014)](Project_baby_names/assets/WA22.PNG)
 
 *The graph depicts the "trendiness factor" of various names, indicating how much more popular each name was in 2014 compared to its historical average in Washington.*
 
 *"Emma" has the highest trendiness factor, suggesting a dramatic increase in popularity and possibly reflecting a broader trend in naming preferences in 2014.*
 
+
 ## 3. The SQL query is designed to find the most popular names that are unique to Washington by excluding any names that also appear in other states' records.
+
 
 ```sql
 SELECT WA.name, WA.total_babies
@@ -340,7 +384,7 @@ WHERE Other.name IS NULL
 ORDER BY WA.total_babies DESC;
 ```
 
-![Query Result](Project_baby_names\assets\WA3.PNG)
+![Query Result](Project_baby_names/assets/WA3.PNG)
 
 *The provided list represents names that are unique to Washington state, with the number of babies given each name.*
  
@@ -372,7 +416,9 @@ ORDER BY WA.total_babies DESC;
 
 # Conclusion:
 
-Names are a mirror to our society, reflecting our values, inspirations, and even our collective psyche at any given moment. This project has not just been about understanding SQL or navigating datasets; it has been about deciphering the subtle language of our cultural evolution. As I conclude this project, I'm struck by the richness of the narrative that data can unfold and the powerful tools at our disposal to narrate this story. The insights gained are not just data points; they are the names of our past, the echoes of our present, and perhaps, the whispers of our future.
+Names are a mirror to our society, reflecting our values, inspirations, and even our collective psyche at any given moment. This project has not just been about understanding SQL or navigating datasets; it has been about deciphering the subtle language of our cultural evolution. 
+
+As I conclude this project, I'm struck by the richness of the narrative that data can unfold and the powerful tools at our disposal to narrate this story. The insights gained are not just data points; they are the names of our past, the echoes of our present, and perhaps, the whispers of our future.
 
 
 
