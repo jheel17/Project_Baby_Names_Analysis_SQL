@@ -8,6 +8,10 @@ join me as we dive into the world of SQL queries and uncover the stories hidden 
 
 SQL queries? Check them out here: [Project_baby_names](/Project_baby_names/)
 
+
+[View Baby Names Dashboard on Tableau Public](https://public.tableau.com/app/profile/jheel.jagani/viz/Baby_Names_17129559109220/Dashboard1?publish=yes)
+
+
 # Background: 
 
 In this project, we're analyzing changes in American baby name preferences since 1910 using dataset from the United States Social Security Administration. We're exploring which names have remained popular for over a century and comparing them to recent top names. This not only helps new parents but also hones skills applicable to understanding trends and popularity in various industries. 🍼💼
